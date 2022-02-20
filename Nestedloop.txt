@@ -1,0 +1,28 @@
+  const loadTable = () =>{
+        $.ajax({
+          url: "{{route('issuedReportAPI')}}",
+          type: "POST",
+          data:{
+              "department_id": function() { return $('#department_id').val() },
+              "procurementer_id": function() { return $('#procurementer_id').val() },
+              "fromdate": function() { return $('#fromdate').val() },
+              "toDate": function() { return $('#toDate').val() },
+            },
+            success: function(data){
+            console.log(data)
+                let table_row = ``;
+                let i=1;
+                data.forEach(req_cld => {
+                    req_cld.requisition_childs.forEach(row => {
+                        table_row += `<tr><td>${i}</td><td>${req_parnt.requisition_date}</td><td>${row.product_id}</td></tr>`
+                        i++;
+                    });
+
+                });
+                $('#table_body').html(table_row);
+            },  
+            error: function(err){
+                console.log(err)
+            }
+        });
+    }
